@@ -17,11 +17,14 @@ export class TodoListComponent implements OnInit {
   ngOnInit(): void {
     this.todoService.getTodos()
       .subscribe((todos: Todo[]) => {
+        const futureTime = new Date(8640000000000000);
         this.todos = todos.sort((a, b) => {
            if (a.isComplete > b.isComplete) return 1; 
            if (b.isComplete > a.isComplete) return -1; 
-           
-           return +new Date(b.dueDate) - +new Date(a.dueDate);
+           let dueDateA = a.dueDate ? +new Date(a.dueDate) : futureTime;
+           let dueDateB = b.dueDate ? +new Date(b.dueDate) : futureTime;
+
+          return +new Date(dueDateA) - +new Date(dueDateB) 
         })
       });
   }
@@ -31,11 +34,16 @@ export class TodoListComponent implements OnInit {
     lastUpdated!.isComplete = !lastUpdated?.isComplete;
 
     this.todoService.updateTodo(id, lastUpdated?.isComplete).subscribe();
+
     if (lastUpdated!.isComplete) {
-      const index = this.todos.findIndex((t) => t.id === id);
-      const lastUpdated = this.todos.find((t) => t.id === id);
-      this.todos.splice(index, 1); 
-      this.todos.push(lastUpdated!)
+      this.updateTodoListOrder(id);
     }
+  }
+
+  private updateTodoListOrder(id: string): void {
+    const index = this.todos.findIndex((t) => t.id === id);
+    const lastUpdated = this.todos.find((t) => t.id === id);
+    this.todos.splice(index, 1);
+    this.todos.push(lastUpdated!);
   }
 }
