@@ -5,10 +5,13 @@ import { Todo } from '../todo/todo.model';
 @Component({
   selector: 'todo-list',
   templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  styleUrls: ['./todo-list.component.scss'],
+  
 })
 export class TodoListComponent implements OnInit {
+
   todos: Todo[];
+  
   constructor(private todoService: TodoService) {}
   
   ngOnInit(): void {
@@ -23,4 +26,16 @@ export class TodoListComponent implements OnInit {
       });
   }
 
+  updateTodo(id: string): void {
+    const lastUpdated = this.todos.find((t) => t.id === id);
+    lastUpdated!.isComplete = !lastUpdated?.isComplete;
+
+    this.todoService.updateTodo(id, lastUpdated?.isComplete).subscribe();
+    if (lastUpdated!.isComplete) {
+      const index = this.todos.findIndex((t) => t.id === id);
+      const lastUpdated = this.todos.find((t) => t.id === id);
+      this.todos.splice(index, 1); 
+      this.todos.push(lastUpdated!)
+    }
+  }
 }

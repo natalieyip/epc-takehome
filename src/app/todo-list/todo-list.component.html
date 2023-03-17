@@ -5,6 +5,7 @@
             aria-label="complete todo"
             name="checkbox"
             type="checkbox" 
+            (click)="updateTodo(todo.id)"
             [checked]="todo.isComplete"/> 
         <span> 
             {{todo.description}} 
