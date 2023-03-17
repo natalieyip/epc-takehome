@@ -1,0 +1,16 @@
+<header>Todo App</header>
+<div>
+    <div *ngFor="let todo of todos">
+        <input 
+            aria-label="complete todo"
+            name="checkbox"
+            type="checkbox" 
+            [checked]="todo.isComplete"/> 
+        <span> 
+            {{todo.description}} 
+        </span>
+        <span> 
+            {{todo.dueDate | date:'M/d/yy'}} 
+        </span>
+    </div>
+</div>
