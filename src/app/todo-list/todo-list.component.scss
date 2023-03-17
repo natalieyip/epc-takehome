@@ -1,0 +1,50 @@
+@import 'src/styles.scss';
+
+header { 
+    font-size: 48px;
+    padding-bottom: 30px;
+}
+
+.todo-list-container {
+    font-size: 30px;
+    margin: 0 30%;
+}
+.todo-list {
+    &-item {
+        display: flex;
+        font-weight: bold;
+        place-content: space-between;
+    
+        &__checkbox {
+            width: 25px;
+            accent-color:#8194a3 
+        }
+
+        &__info {
+            display: flex;
+        }
+    
+        &-completed {
+            text-decoration: line-through;
+        }
+    }
+}
+
+.loading-spinner {
+    top: 0;
+    left: 0;
+    padding: 25px;
+    margin-left: 45px;
+    margin-top: 45px;
+    border: 10px solid transparent;
+    border-radius: 50%;
+    border-top: 10px solid #1794c2;
+    width: 50px;
+    height: 50px;
+    animation: spinner 1.5s linear infinite;
+}
+
+@keyframes spinner {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+}

@@ -11,11 +11,13 @@ import { Todo } from '../todo/todo.model';
 export class TodoListComponent implements OnInit {
 
   todos: Todo[];
+  isLoadingTodoList = true; 
   
   constructor(private todoService: TodoService) {}
   
   ngOnInit(): void {
-    this.todoService.getTodos()
+    setTimeout(() => {
+      this.todoService.getTodos()
       .subscribe((todos: Todo[]) => {
         const futureTime = new Date(8640000000000000);
         this.todos = todos.sort((a, b) => {
@@ -24,9 +26,11 @@ export class TodoListComponent implements OnInit {
            let dueDateA = a.dueDate ? +new Date(a.dueDate) : futureTime;
            let dueDateB = b.dueDate ? +new Date(b.dueDate) : futureTime;
 
-          return +new Date(dueDateA) - +new Date(dueDateB) 
+          return +new Date(dueDateA) - +new Date(dueDateB);
         })
+        this.isLoadingTodoList = false;
       });
+    }, 2000)
   }
 
   updateTodo(id: string): void {

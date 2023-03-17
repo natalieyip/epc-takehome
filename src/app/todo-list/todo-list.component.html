@@ -1,17 +1,28 @@
 <header>Todo App</header>
-<div>
-    <div *ngFor="let todo of todos">
-        <input 
-            aria-label="complete todo"
-            name="checkbox"
-            type="checkbox" 
-            (click)="updateTodo(todo.id)"
-            [checked]="todo.isComplete"/> 
-        <span> 
-            {{todo.description}} 
-        </span>
-        <span> 
-            {{todo.dueDate | date:'M/d/yy'}} 
-        </span>
+<div class="todo-list-container">
+    <div *ngIf="isLoadingTodoList;else todoList">
+        <div class="loading-spinner"></div>
     </div>
+    <ng-template #todoList>
+        <div class="todo-list-item" *ngFor="let todo of todos">
+            <div class="todo-list-item__info">
+                <input 
+                aria-label="complete todo"
+                name="checkbox"
+                type="checkbox" 
+                class="todo-list-item__checkbox"
+                (click)="updateTodo(todo.id)"
+                [checked]="todo.isComplete"/> 
+                <div 
+                    [class.todo-list-item-completed]="todo.isComplete" 
+                    class="todo-list-item__name"> 
+                    {{todo.description}} 
+                </div>
+            </div>
+            <div> 
+                {{todo.dueDate | date:'M/d/yy'}} 
+            </div>
+        </div>
+    </ng-template>
 </div>
+
