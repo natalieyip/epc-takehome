@@ -26,6 +26,11 @@ header {
     
         &-completed {
             text-decoration: line-through;
+            background: rgba(0, 300, 0, .4)
+        }
+
+        &-overdue {
+            background: rgba(300, 0, 0, .4)
         }
     }
 }
@@ -47,4 +52,11 @@ header {
 @keyframes spinner {
     0% { transform: rotate(0deg);}
     100% { transform: rotate(360deg);}
+}
+
+@media (max-width: 800px) {
+    .todo-list-container { 
+        margin: 0; 
+        font-size: 24px;
+    }
 }

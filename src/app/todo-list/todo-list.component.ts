@@ -11,7 +11,8 @@ import { Todo } from '../todo/todo.model';
 export class TodoListComponent implements OnInit {
 
   todos: Todo[];
-  isLoadingTodoList = true; 
+  isLoadingTodoList: boolean = true; 
+  todaysDate = new Date('2/19/21'); 
   
   constructor(private todoService: TodoService) {}
   
@@ -49,5 +50,11 @@ export class TodoListComponent implements OnInit {
     const lastUpdated = this.todos.find((t) => t.id === id);
     this.todos.splice(index, 1);
     this.todos.push(lastUpdated!);
+  }
+
+  isOverdue(todo: Todo): boolean {
+    return this.todaysDate > new Date(todo.dueDate) &&
+     !todo.isComplete &&
+     todo.dueDate !== null
   }
 }
